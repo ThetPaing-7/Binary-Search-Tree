@@ -49,7 +49,6 @@ class Tree{
         }
 
         let root_value = root.data
-        console.log(root_value)
 
         // base case
         if(root_value === values){
@@ -66,6 +65,34 @@ class Tree{
     
     }
 
+    // accept a value and insert new node to the tree
+    insert(value){
+        // if value is in tree do nothing
+        if(this.includes(value)){
+            return 'Value alread Exist'
+        }
+
+        let node = new Node(value)
+
+        let current = this.root
+        while(current !== null){
+            if(current.data > value){
+                if(current.left === null){
+                    current.left = node
+                    return this.root
+                }
+                current = current.left
+            }else
+                {
+                if(current.right === null){
+                    current.right = node
+                    return this.root
+                }
+                current = current.right
+            }
+        }
+    }
+
 
     showTree(){
         return this.root
@@ -77,5 +104,8 @@ class Tree{
 const neem = new Tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324])
 const rootNode = neem.showTree()
 neem.prettyPrint(rootNode)
-
-console.log(neem.includes(45))
+// console.log(neem.showTree())
+console.log(neem.insert(45))
+console.log(neem.insert(6))
+// console.log(neem.showTree())
+neem.prettyPrint(rootNode)
