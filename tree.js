@@ -93,6 +93,38 @@ class Tree{
         }
     }
 
+    // accept a values and remove from the tree
+    deleteItem(value){
+        // if value is not in tree do nothing
+        if(!this.includes(value)){
+            return 'Value does not exist'
+        }
+
+        // the node has no child, the leave node
+        let current = this.root
+        let previous = null
+        while(true){
+        if(value > current.data){
+            previous = current
+            current = current.right
+            if(current.data === value && current.left === null && current.right === null){
+                previous.right = null
+                return this.root
+            }
+        }else{
+            previous = current
+            current = current.left
+            if(current.data === value && current.left === null && current.right === null){
+                previous.left = null
+                return this.root
+            }
+        }
+
+
+        }
+        
+    }
+
 
     showTree(){
         return this.root
@@ -103,9 +135,11 @@ class Tree{
 
 const neem = new Tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324])
 const rootNode = neem.showTree()
+
+// console.log(neem.showTree())
+// console.log(neem.insert(45))
+// console.log(neem.insert(6))
+// console.log(neem.showTree())
 neem.prettyPrint(rootNode)
-// console.log(neem.showTree())
-console.log(neem.insert(45))
-console.log(neem.insert(6))
-// console.log(neem.showTree())
+console.log(neem.deleteItem(3))
 neem.prettyPrint(rootNode)
