@@ -93,38 +93,99 @@ class Tree{
         }
     }
 
-    // accept a values and remove from the tree
-    deleteItem(value){
-        // if value is not in tree do nothing
-        if(!this.includes(value)){
-            return 'Value does not exist'
-        }
 
-        // the node has no child, the leave node
-        let current = this.root
-        let previous = null
-        while(true){
-        if(value > current.data){
-            previous = current
-            current = current.right
-            if(current.data === value && current.left === null && current.right === null){
-                previous.right = null
-                return this.root
-            }
-        }else{
-            previous = current
-            current = current.left
-            if(current.data === value && current.left === null && current.right === null){
-                previous.left = null
-                return this.root
-            }
-        }
-
-
-        }
-        
+    getSuccessor(curr) {
+        curr = curr.right;
+        while (curr !== null  && curr !== undefined && curr.left !== null)
+            curr = curr.left;
+        return curr;
     }
 
+
+    // // accept a values and remove from the tree
+    // deleteItem(value){
+    //     // if value is not in tree do nothing
+    //     if(!this.includes(value)){
+    //         return 'Value does not exist'
+    //     }
+
+    //     // the node has no child, the leave node
+    //     let current = this.root
+    //     let previous = null
+    //     while(true){
+    //     if(value > current.data){
+    //         previous = current
+    //         current = current.right
+    //         if(current.data === value && current.left === null && current.right === null){
+    //             previous.right = null
+    //             return this.root
+    //         }
+    //     }else if(value < current.data){
+    //         previous = current
+    //         current = current.left
+    //         if(current.data === value && current.left === null && current.right === null){
+    //             previous.left = null
+    //             return this.root
+    //         }
+    //     }
+    //     else {
+    //        let child
+    //         if (current.left !== null) {
+    //             child = current.left
+    //         } else {
+    //             child = current.right
+    //          }
+    //         // current is the left child of previous
+    //         if (previous.left === current) {
+    //             previous.left = child
+    //         } 
+    //     // current is the right child of previous
+    //         else {
+    //             previous.right = child
+    //         }
+
+    //         return this.root        
+    //     }
+
+    //     let successor = this.getSuccessor(this.root)
+    //     this.root.data = successor.data
+    //     this.deleteItem(successor.data)
+    //     return this.root
+    //     }
+
+    //     // the node has one child left or right
+
+        
+    // }
+
+    delNode(root, x){
+        if(root === null){
+            return root
+        }
+
+
+        if(root.data > x){
+            root.left = this.delNode(root.left, x)
+        }else if(root.data < x){
+            root.right = this.delNode(root.right, x)
+        }else{
+            // Node with 0 or 1 child
+            if(root.left === null){
+                return root.right
+            }
+            if(root.right === null){
+                return root.left
+            }
+
+
+            // Node with 2 children
+            let successor = this.getSuccessor(root)
+            root.data = successor.data
+            root.right = this.delNode(root.right, successor.data)
+        }
+
+        return root    
+    }
 
     showTree(){
         return this.root
@@ -141,5 +202,10 @@ const rootNode = neem.showTree()
 // console.log(neem.insert(6))
 // console.log(neem.showTree())
 neem.prettyPrint(rootNode)
-console.log(neem.deleteItem(3))
+console.log("==============================")
+neem.delNode(rootNode,1)
 neem.prettyPrint(rootNode)
+console.log("==============================")
+neem.delNode(rootNode,8)
+neem.prettyPrint(rootNode)
+
