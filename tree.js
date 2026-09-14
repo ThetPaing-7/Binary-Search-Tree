@@ -187,6 +187,45 @@ class Tree{
         return root    
     }
 
+
+    // traverse level order
+    levelOrderForEach(callback){
+        let root = this.showTree()
+
+        this.showError(callback)
+
+        if(root ===  null){
+            return
+        }
+
+        let queque = [root]
+
+        while(queque.length !== 0){
+            
+            let current = queque.shift()
+
+            callback(current.data)
+
+            // if left child exist
+            if(current.left !== null){
+                queque.push(current.left)
+            }
+
+            // if right child exist
+            if(current.right !== null){
+                queque.push(current.right)
+            }
+        }
+    
+    }
+
+    showError(x){
+        if(!x){
+            throw new Error('A callback is required')
+        }
+    }
+
+
     showTree(){
         return this.root
     }
@@ -208,4 +247,8 @@ neem.prettyPrint(rootNode)
 console.log("==============================")
 neem.delNode(rootNode,8)
 neem.prettyPrint(rootNode)
-
+console.log("==============================")
+neem.levelOrderForEach()
+neem.levelOrderForEach((value)=>{
+    console.log(value)
+})
