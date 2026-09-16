@@ -219,6 +219,47 @@ class Tree{
     
     }
 
+
+
+    inOrderForEach(root, callback){
+        this.showError(callback)
+
+        if(root === null){
+            return
+        }
+
+        this.inOrderForEach(root.left, callback)
+        callback(root.data)
+        this.inOrderForEach(root.right, callback)
+    }
+
+    preOrderForEach(root, callback){
+        this.showError(callback)
+
+        if(root === null){
+            return
+        }
+
+        callback(root.data)
+        this.inOrderForEach(root.left, callback)
+        this.inOrderForEach(root.right, callback)
+
+    }
+
+
+    postOrderForEach(root, callback){
+         this.showError(callback)
+
+        if(root === null){
+            return
+        }
+
+        this.inOrderForEach(root.left, callback)
+        this.inOrderForEach(root.right, callback)
+        callback(root.data)
+
+    }
+
     showError(x){
         if(!x){
             throw new Error('A callback is required')
@@ -248,7 +289,13 @@ console.log("==============================")
 neem.delNode(rootNode,8)
 neem.prettyPrint(rootNode)
 console.log("==============================")
-neem.levelOrderForEach()
-neem.levelOrderForEach((value)=>{
-    console.log(value)
-})
+// neem.levelOrderForEach()
+// neem.levelOrderForEach((value)=>{
+//     console.log(value)
+// })
+
+neem.inOrderForEach(rootNode, (value)=> console.log(value * 1))
+console.log("==============================")
+neem.preOrderForEach(rootNode, (value)=> console.log(value * 1))
+console.log("==============================")
+neem.postOrderForEach(rootNode, (value)=> console.log(value * 1))
