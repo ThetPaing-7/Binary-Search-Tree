@@ -6,7 +6,8 @@ camel case
 
 class Tree{
     
-    
+
+
     #buildTree(array, start = 0, end = array.length - 1){
         // let uniqueArray = [...new Set(array)].sort((a,b) => a - b)
 
@@ -23,9 +24,12 @@ class Tree{
         return node
         
     }
+
+
     
     constructor(array){
         this.root = this.#buildTree([...new Set(array)].sort((a,b) => a - b))
+        this.depthCount = 0
     }
 
 
@@ -43,13 +47,14 @@ class Tree{
 
     // accepts values and return true if value is in tree, else false
     includes(values,root = this.root){
-
+        
         if(root == null){
             return false
         }
 
         let root_value = root.data
-
+        
+        this.depthCount++
         // base case
         if(root_value === values){
             return true
@@ -74,6 +79,7 @@ class Tree{
 
         let node = new Node(value)
 
+        this.depthCount++
         let current = this.root
         while(current !== null){
             if(current.data > value){
@@ -260,6 +266,29 @@ class Tree{
 
     }
 
+    // count the value from root
+    depth(value){
+        if(!this.includes(value)){
+            return undefined
+        }else{
+            this.depthCount = 0
+            this.includes(value)
+            return this.depthCount
+        }
+
+    }
+
+
+    // count the current value to leaf node
+    height(value){
+        if(!this.includes(value)){
+            return undefined
+        }else{
+
+        }
+    }
+
+    // helper function to throw error is a callback is not provided
     showError(x){
         if(!x){
             throw new Error('A callback is required')
@@ -281,21 +310,28 @@ const rootNode = neem.showTree()
 // console.log(neem.insert(45))
 // console.log(neem.insert(6))
 // console.log(neem.showTree())
-neem.prettyPrint(rootNode)
-console.log("==============================")
+// neem.prettyPrint(rootNode)
+// console.log("==============================")
+// neem.delNode(rootNode,1)
+// neem.prettyPrint(rootNode)
+// console.log("==============================")
+// neem.delNode(rootNode,8)
+// neem.prettyPrint(rootNode)
+// console.log("==============================")
+// // neem.levelOrderForEach()
+// // neem.levelOrderForEach((value)=>{
+// //     console.log(value)
+// // })
+
+// neem.inOrderForEach(rootNode, (value)=> console.log(value * 1))
+// console.log("==============================")
+// neem.preOrderForEach(rootNode, (value)=> console.log(value * 1))
+// console.log("==============================")
+// neem.postOrderForEach(rootNode, (value)=> console.log(value * 1))
 neem.delNode(rootNode,1)
 neem.prettyPrint(rootNode)
-console.log("==============================")
-neem.delNode(rootNode,8)
-neem.prettyPrint(rootNode)
-console.log("==============================")
-// neem.levelOrderForEach()
-// neem.levelOrderForEach((value)=>{
-//     console.log(value)
-// })
-
-neem.inOrderForEach(rootNode, (value)=> console.log(value * 1))
-console.log("==============================")
-neem.preOrderForEach(rootNode, (value)=> console.log(value * 1))
-console.log("==============================")
-neem.postOrderForEach(rootNode, (value)=> console.log(value * 1))
+console.log(neem.depth(8))
+console.log(neem.depth(4))
+console.log(neem.depth(67))
+console.log(neem.depth(5))
+console.log(neem.depth(7))
