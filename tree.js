@@ -279,12 +279,41 @@ class Tree{
     }
 
 
+
+    find_nodes(root, value){
+        
+        if(root === null){
+            return
+        }
+
+        if(root.data === value){
+            return root
+        }
+
+        if(root.data < value){
+            return this.find_nodes(root.right, value)
+        }else{
+            return this.find_nodes(root.left, value)
+        }
+    }
+
+
+    find_height(root){
+        if(root == null){
+            return -1
+        }
+        
+        return Math.max(this.find_height(root.left),this.find_height(root.right)) + 1
+    }
+
+
     // count the current value to leaf node
-    height(value){
+    height(root,value){
         if(!this.includes(value)){
             return undefined
         }else{
-
+            let part_root = this.find_nodes(root,value)
+            return this.find_height(part_root)
         }
     }
 
@@ -330,8 +359,7 @@ const rootNode = neem.showTree()
 // neem.postOrderForEach(rootNode, (value)=> console.log(value * 1))
 neem.delNode(rootNode,1)
 neem.prettyPrint(rootNode)
-console.log(neem.depth(8))
-console.log(neem.depth(4))
-console.log(neem.depth(67))
-console.log(neem.depth(5))
-console.log(neem.depth(7))
+
+console.log(neem.height(rootNode,4))
+console.log(neem.height(rootNode,8))
+console.log(neem.height(rootNode,3))
