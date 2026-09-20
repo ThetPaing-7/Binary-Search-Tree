@@ -317,6 +317,25 @@ class Tree{
         }
     }
 
+
+    // check if a tree is balanced
+    isBalanced(root){
+        if(root === null){
+            return true
+        }
+
+        let leftHeight = this.find_height(root.left)
+        let rightHeight = this.find_height(root.right)
+
+        if(Math.abs(leftHeight - rightHeight) > 1){
+            return false
+        }
+
+
+
+        return this.isBalanced(root.left) && this.isBalanced(root.right)
+    }
+
     // helper function to throw error is a callback is not provided
     showError(x){
         if(!x){
@@ -358,8 +377,11 @@ const rootNode = neem.showTree()
 // console.log("==============================")
 // neem.postOrderForEach(rootNode, (value)=> console.log(value * 1))
 neem.delNode(rootNode,1)
+neem.delNode(rootNode,3)
+
 neem.prettyPrint(rootNode)
 
 console.log(neem.height(rootNode,4))
 console.log(neem.height(rootNode,8))
 console.log(neem.height(rootNode,3))
+console.log(neem.isBalanced(rootNode))
