@@ -336,6 +336,17 @@ class Tree{
         return this.isBalanced(root.left) && this.isBalanced(root.right)
     }
 
+
+    rebalance(){
+        if(this.isBalanced(this.root) == false){
+            let arrays = []
+            this.inOrderForEach(this.root, (value) => arrays.push(value))
+            this.root = this.#buildTree(arrays)
+        }else{
+            return 'Already Balanced'
+        }
+    }
+
     // helper function to throw error is a callback is not provided
     showError(x){
         if(!x){
@@ -381,7 +392,11 @@ neem.delNode(rootNode,3)
 
 neem.prettyPrint(rootNode)
 
-console.log(neem.height(rootNode,4))
-console.log(neem.height(rootNode,8))
-console.log(neem.height(rootNode,3))
+console.log("======================")
 console.log(neem.isBalanced(rootNode))
+console.log("======================")
+neem.rebalance()
+let newRootNode = neem.showTree()
+neem.prettyPrint(newRootNode)
+console.log("======================")
+console.log(neem.isBalanced(newRootNode))
